@@ -8,6 +8,11 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AuthMail;
 
 class RegisterController extends Controller
 {
@@ -36,10 +41,6 @@ class RegisterController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
 
     /**
      * Get a validator for an incoming registration request.
@@ -63,12 +64,34 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
-    protected function create(array $data)
+    protected function create(Request $request)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+        
+        $file = $request->file('image');
+        $ext = $file->getClientOriginalExtension();
+        $fileName = time() . '.' . $ext;
+        $file->move('uploads/image', $fileName);
+
+         $user=DB::table('users')->insert([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'employer_type' => $request->employer_type,
+            'image' => $fileName,
+            'password' => Hash::make($request->password),
         ]);
+     
+
+        $adminEmail=DB::table('settings')->where('key','contact_email')->value('value');
+        $data=[
+            'email'=>$request->email,
+            'name'=>$request->name,
+            'adminEmail'=>$adminEmail,
+        ];
+        Mail::to($adminEmail)->send(new AuthMail($data));
+        toastr()->success('تم انشاء الحساب الرجاء القيام بعملية تسجيل الاخيره','عملية ناجحة');
+
+        return redirect('/login');
+
     }
 }

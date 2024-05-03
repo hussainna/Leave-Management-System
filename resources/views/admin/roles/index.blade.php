@@ -36,49 +36,37 @@
 				<thead>
 					<tr>
 						<th>#</th>
-						<th>اسم القاعدة</th>
+						<th>اسم الصلاحية</th>
+						<th>عدد الاجازات</th>
 						<th>تحكم</th>
 					</tr>
 				</thead>
 				<tbody id="sortable-table">
 					@foreach($roles as $role)
 					<tr >
-						<td class="ui-state-default drag-handler" data-role="{{$role->id}}">{{$role->id}}</td>
+						<td class="ui-state-default drag-handler" >{{$loop->iteration}}</td>
 						<td>{{$role->name}}</td>
-					 
+						<td>{{$role->number_leaves}}</td>
+
 						<td style="width: 270px;">
 
 					 
-							@can('roles-read')
-							<a href="{{route('admin.roles.show',$role)}}">
-								<span class="btn  btn-outline-success btn-sm font-1 mx-1">
-									<span class="fas fa-search "></span> عرض
-								</span>
-							</a>
-							@endcan
-							@can('roles-update')
-							<a href="{{route('admin.roles.edit',$role)}}">
+							
+							<a href="">
 								<span class="btn  btn-outline-success btn-sm font-1 mx-1">
 									<span class="fas fa-wrench "></span> تحكم
 								</span>
 							</a>
-							@endcan
-							@can('roles-delete')
-							<form method="POST" action="{{route('admin.roles.destroy',$role)}}" class="d-inline-block">@csrf @method("DELETE")
-								<button class="btn  btn-outline-danger btn-sm font-1 mx-1" onclick="var result = confirm('هل أنت متأكد من عملية الحذف ؟');if(result){}else{event.preventDefault()}">
-									<span class="fas fa-trash "></span> حذف
-								</button>
-							</form>
-							@endcan
+							<a class="btn  btn-outline-danger btn-sm font-1 mx-1" href="{{url('/admin/delete-permission/'.$role->id)}}">
+								<span class="fas fa-trash "></span> حذف
+							</a>
+							
 						</td>
 					</tr>
 					@endforeach
 				</tbody>
 			</table>
 			</div>
-		</div>
-		<div class="col-12 p-3">
-			{{$roles->appends(request()->query())->render()}}
 		</div>
 	</div>
 </div>

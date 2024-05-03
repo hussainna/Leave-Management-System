@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\VerifyMail;
 
 class BackendUserController extends Controller
 {
@@ -33,7 +35,28 @@ class BackendUserController extends Controller
         return view('admin.users.index',compact('users'));
         
     }
+    public function authUser($id)
+    {
+        $user=DB::table('users')->find($id);
+        return view('admin.users.authUser',compact('user'));
+    }
+    
+    public function createAuth($id)
+    {
+        DB::table('users')->where('id',$id)->update(['is_active'=>1]);
+        $user=DB::table('users')->where('id',$id)->first();
+        $user=DB::table('users')->where('id',$id)->first();
 
+        $data=[
+            'name'=>$user->name,
+        ];
+
+        // Mail::to($user->email)->send(new VerifyMail($data));
+
+        return redirect('/admin/users')->with('success', 'تم توثيق الحساب بنجاح');
+
+
+    }
     /**
      * Show the form for creating a new resource.
      *

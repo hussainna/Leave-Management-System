@@ -16,7 +16,7 @@ body {
         <div class="col-12 col-lg-6 text-center p-0" style="">
             <div class="col-12 p-2 p-lg-4 align-items-center justify-content-center d-flex row" style="min-height:70vh">
                 <div class="col-12 p-3 p-lg-4" style="background:#fff;border-radius: 10px;">
-                    <form method="POST" action="{{ route('register') }}" id="register-form" class="row m-0 d-flex">
+                    <form method="POST" action="{{ url('/register') }}" enctype="multipart/form-data" class="row m-0 d-flex">
                         @csrf
                         <input type="hidden" name="recaptcha" id="recaptcha">
                         <div class="col-12 p-0 mb-5 mt-3" style="width: 550px;max-width: 100%;margin: 0px auto;">
@@ -58,6 +58,33 @@ body {
                         </div>
                         <div class="form-group row mb-4 col-12 col-lg-6   px-0 pt-2 ">
                             <div class="col-md-12 px-2 pt-4" style="position: relative;">
+                                <label  class="col-form-label text-md-right mb-1 font-small px-2 py-1 d-inline" style="background:#f4f4f4;position: absolute;top: 17px;right: 20px; border-radius: 3px!important">رقم الهاتف</label>
+                                <input  type="number" class="form-control mt-2 d-inline-block @error('name') is-invalid @enderror" name="phone" value="" required="" autocomplete="off" autofocus="" style=";height: 42px;border-color: #eaedf1;border-radius: 3px!important" >
+                            </div>
+                            
+                        </div>
+                        <div class="form-group row mb-4 col-12 col-lg-6   px-0 pt-2 ">
+                            <div class="col-md-12 px-2 pt-4" style="position: relative;">
+                                <label  class="col-form-label text-md-right mb-1 font-small px-2 py-1 d-inline" style="background:#f4f4f4;position: absolute;top: 17px;right: 20px; border-radius: 3px!important">صورة الموضف</label>
+                                <input  type="file" class="form-control mt-2 d-inline-block @error('name') is-invalid @enderror" name="image" value="" required="" autocomplete="off" autofocus="" style=";height: 42px;border-color: #eaedf1;border-radius: 3px!important" >
+                            </div>
+                            
+                        </div>
+                        <div class="form-group row mb-4 col-12 col-lg-6   px-0 pt-2 ">
+                            <div class="col-md-12 px-2 pt-4" style="position: relative;">
+                                <label  class="col-form-label text-md-right mb-1 font-small px-2 py-1 d-inline" style="background:#f4f4f4;position: absolute;top: 17px;right: 20px; border-radius: 3px!important">نوع الموضف</label>
+                                <select class="form-control" name="employer_type" class="" id="">
+                                    @foreach ($permissions as $p)
+                                    <option value="{{$p->name}}">{{$p->name}}</option>
+                                        
+                                    @endforeach
+
+                                </select>
+                            </div>
+                            
+                        </div>
+                        <div class="form-group row mb-4 col-12 col-lg-6   px-0 pt-2 ">
+                            <div class="col-md-12 px-2 pt-4" style="position: relative;">
                                 <label for="email" class="col-form-label text-md-right mb-1 font-small px-2 py-1 d-inline" style="background:#f4f4f4;position: absolute;top: 17px;right: 20px; border-radius: 3px!important">البريد الالكتروني</label>
                                 <input id="email" type="email" class="form-control mt-2 d-inline-block @error('email') is-invalid @enderror" name="email" value="" required="" autocomplete="off" autofocus="" style=";height: 42px;border-color: #eaedf1;border-radius: 3px!important" value="{{ old('email') }}">
                             </div>
@@ -78,6 +105,9 @@ body {
                             </span>
                             @enderror
                         </div>
+
+          
+
                         <div class="form-group row mb-4 col-12 col-lg-6   px-0 pt-2 ">
                             <div class="col-md-12 px-2 pt-4" style="position: relative;">
                                 <label for="password_confirmation" class="col-form-label text-md-right mb-1 font-small px-2 py-1 d-inline" style="background:#f4f4f4;position: absolute;top: 17px;right: 20px;border-radius: 3px!important">تأكيد كلمة المرور</label>
@@ -122,7 +152,7 @@ body {
             <div class="overlap-grid overlap-grid-2">
                 <div class="item mx-auto">
                     <div class="shape bg-dot primary rellax w-16 h-20" data-rellax-speed="1" style="top: 3rem; left: 5.5rem"></div>
-                    <div class="col-12 p-0 align-items-center py-5 justify-content-center d-flex svg-animation" style="background-image: url('{{$settings['get_website_logo']}}');background-size: cover;padding-top: 57%;background-position: center;height: 400px;z-index: 1;position: relative;">
+                    <div class="col-12 p-0 align-items-center py-5 justify-content-center d-flex svg-animation" style="background-image: url('{{$settings['get_website_logo']}}');background-size: cover;padding-top: 57%;background-position: center;height: 400px;width:400px;z-index: 1;position: relative;">
                     </div>
                 </div>
             </div>

@@ -200,7 +200,7 @@
 
                 <div class="col-12 px-3 aside-menu" style="height: calc(100vh - 260px);overflow: auto;">
 
-                    <a href="{{route('admin.index')}}" class="col-12 px-0" >
+                    <a href="{{url('/admin')}}" class="col-12 px-0" >
                         <div class="col-12 item-container px-0 d-flex" >
                             <div style="width: 50px" class="px-3 text-center">
                                 <span class="fal fa-home font-2"> </span> 
@@ -213,7 +213,7 @@
 
 
                     @can('roles-read')
-                    <a href="{{route('admin.roles.index')}}" class="col-12 px-0" >
+                    <a href="/admin/permissions" class="col-12 px-0" >
                         <div class="col-12 item-container px-0 d-flex " >
                             <div style="width: 50px" class="px-3 text-center">
                                 <span class="fal fa-key font-2"> </span> 
@@ -236,6 +236,17 @@
                         </div>
                     </a>
                     @endcan
+
+                    <a href="/admin/leave" class="col-12 px-0" >
+                        <div class="col-12 item-container px-0 d-flex " >
+                            <div style="width: 50px" class="px-3 text-center">
+                                <span class="fal fa-tag font-2" ></span>
+                            </div>
+                            <div style="width: calc(100% - 50px)" class="px-2 item-container-title">
+                                الاجازات
+                            </div> 
+                        </div>
+                    </a>
                     
 
                     

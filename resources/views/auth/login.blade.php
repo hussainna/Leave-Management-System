@@ -136,7 +136,7 @@
             <div class="overlap-grid overlap-grid-2">
                 <div class="item mx-auto">
                     <div class="shape bg-dot primary rellax w-16 h-20" data-rellax-speed="1" style="top: 3rem; left: 5.5rem"></div>
-                    <div class="col-12 p-0 align-items-center py-5 justify-content-center d-flex svg-animation" style="background-image: url('{{$settings['get_website_logo']}}');background-size: cover;padding-top: 57%;background-position: center;height: 342px;z-index: 1;position: relative;">
+                    <div class="col-12 p-0 align-items-center py-5 justify-content-center d-flex svg-animation" style="background-image: url('{{$settings['get_website_logo']}}');background-size: cover;padding-top: 57%;background-position: center;height: 400px;width:400px;z-index: 1;position: relative;">
                     </div>
                 </div>
             </div>

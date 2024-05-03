@@ -9,15 +9,12 @@
                         <div class="col-12 px-0 row d-flex justify-content-between ">
                             <div class="col-12 py-5 rounded-2 text-center" style="text-align: center;background: var(--background-1);margin-top: -5px;">
                                 <div class="col-12" style="display:flex;justify-content: center;">
-                                    <img src="{{auth()->user()->getUserAvatar()}}" style="width:130px;height: 130px;border-radius: 50%;">
+                                    <img src="{{url('uploads/image/'.auth()->user()->image)}}" style="width:130px;height: 130px;border-radius: 50%;">
                                 </div>
                                 <div class="col-12 p-2 text-center" style="overflow:auto;">
                                    {{auth()->user()->name}} @if(auth()->user()->is_online() && 0)<div class="spinner-grow text-success " role="status" style="width:15px;height: 15px;margin: 0px 5px"></div>@endif 
-
                                    <br>
                                     <span class="font-1">{{auth()->user()->bio}}</span>
-                                  
-                                
                                 </div>
                             </div>
                         </div>

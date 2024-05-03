@@ -16,7 +16,7 @@ class FrontController extends Controller
     
     public function index(Request $request)
     {
-        return view('front.index');
+        return redirect('/dashboard');
     }
     
     public function comment_post(Request $request)

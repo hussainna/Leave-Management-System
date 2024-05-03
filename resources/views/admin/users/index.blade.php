@@ -45,6 +45,7 @@
 						<th>نشط</th>
 						<th>الاسم</th>
 						<th>البريد</th>
+						<th>نوع الموضف</th>
 						@if(auth()->user()->can('articles-read'))
 						<th>المقالات</th>
 						@endif
@@ -68,6 +69,7 @@
 						<td>{{\Carbon::parse($user->last_activity)->diffForHumans()}}</td>
 						<td>{{$user->name}}</td>
 						<td>{{$user->email}}</td>
+						<td>{{$user->employer_type}}</td>
 
 						@if(auth()->user()->can('articles-read'))
 						<td><a href="{{route('admin.articles.index',['user_id'=>$user->id])}}">{{$user->articles_count}}</a></td>
@@ -97,7 +99,7 @@
 
 							
 							
-
+{{-- 
 							@can('notifications-create')
 							<a href="{{route('admin.notifications.index',['user_id'=>$user->id])}}">
 							<span class="btn  btn-outline-primary btn-sm font-small mx-1">
@@ -109,23 +111,26 @@
 								<span class="far fa-bell"></span>
 							</span>
 							</a> 
-							@endcan
+							@endcan --}}
 
-							@can('user-roles-update')
+							{{-- @can('user-roles-update')
 							<a href="{{route('admin.users.roles.index',$user)}}">
 							<span class="btn btn-outline-primary btn-sm font-small mx-1">
 								<span class="fal fa-key "></span> الصلاحيات
 							</span>
 							</a>
-							@endcan
+							@endcan --}}
+
+							@if ($user->is_active===0)
 							
-							@can('users-update')
-							<a href="{{route('admin.users.edit',$user)}}">
-							<span class="btn  btn-outline-success btn-sm font-small mx-1">
-								<span class="fas fa-wrench "></span> تحكم
-							</span>
-							</a>
-							@endcan
+							<a href="{{url('/admin/auth-user/'.$user->id)}}">
+							 <span class="btn  btn-outline-success btn-sm font-small mx-1">
+								<span class="fas fa-wrench "></span> تفعيل المستخدم
+							 </span>
+							</a>	
+							@endif
+							
+
 							
 						 						 
 							@can('users-delete')

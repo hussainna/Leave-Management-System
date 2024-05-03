@@ -2,7 +2,7 @@
 @section('content')
 <div class="col-12 p-3">
     <div class="col-12 col-lg-12 p-0 ">
-        <form id="validate-form" class="row" enctype="multipart/form-data" method="POST" action="{{route('admin.roles.store')}}">
+        <form id="validate-form" class="row" enctype="multipart/form-data" method="POST" action="/admin/insert-permission">
             @csrf
             <div class="col-12 col-lg-5 p-0 main-box">
                 <div class="col-12 px-0">
@@ -16,7 +16,7 @@
                     
                     <div class="col-12 col-lg-6 p-2">
                         <div class="col-12">
-                            اسم القاعدة
+                            اسم 
                         </div>
                         <div class="col-12 pt-3">
                             <input type="text" name="name" required maxlength="190" class="form-control" value="{{old('name',$role??"")}}">
@@ -25,10 +25,10 @@
 
                     <div class="col-12 col-lg-6 p-2">
                         <div class="col-12">
-                            يعرض ك
+                            عدد الاجازات
                         </div>
                         <div class="col-12 pt-3">
-                            <input type="text" name="display_name" required maxlength="190" class="form-control" value="{{old('display_name',$role??"")}}">
+                            <input type="integer" name="number_leaves" required maxlength="190" class="form-control" value="{{old('number_leaves',$role??"")}}">
                             
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                 <div class="col-12 p-2">
                     
 
-
+{{-- 
                     <table class="table table-hover">
                     <thead>
                         <tr style="">
@@ -117,7 +117,7 @@
                         </tr>
                         @endforeach
                     </tbody>
-                </table>
+                </table> --}}
 
 
 

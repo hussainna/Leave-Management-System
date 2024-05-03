@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Contact;
 use App\Models\ContactReply;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class FrontendProfileController extends Controller
 {
     public function dashboard(Request $request)
     {
-        return view('front.user.index');
+        $leave=DB::table('leaves')->where('user_id',Auth::id())->get();
+        return view('front.user.index',compact('leave'));
     }
     public function balances(Request $request)
     {

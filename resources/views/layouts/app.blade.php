@@ -79,7 +79,7 @@
         notificationDropdown.addEventListener('show.bs.dropdown', function() {
             $.ajax({
                 method: "POST",
-                url: "{{route('admin.notifications.see')}}",
+                url: "{{url('admin.notifications.see')}}",
                 data: { _token: "{{csrf_token()}}" }
             }).done(function(res) {
                 $('#dropdown-notifications-icon').fadeOut();
@@ -101,7 +101,7 @@
         function get_notifications() {
             $.ajax({
                 method: "GET",
-                url: "{{route('admin.notifications.ajax')}}", 
+                url: "{{url('admin.notifications.ajax')}}", 
                 success: function(data, textStatus, xhr) {
 
                     favicon.badge(data.notifications.response.count_unseen_notifications);

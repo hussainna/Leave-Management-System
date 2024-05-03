@@ -10,7 +10,7 @@
             </div>
             <div class="col-auto d-flex align-items-center px-1 py-2">
                 <a href="/">
-                    <img src="{{$settings['get_website_wide_logo']}}" style="width: 105px;" alt="{{$settings['website_name']}}" >
+                    <img src="{{$settings['get_website_wide_logo']}}" style="height: 50px;width: 50px;" alt="{{$settings['website_name']}}" >
                 </a>
             </div>
             <div class="col me-auto p-0 row justify-content-between d-flex">
@@ -19,6 +19,9 @@
                     @php
                     $menu = \App\Models\Menu::where('location',"NAVBAR")->with(['links'=>function($q){$q->orderBy('order','ASC');}])->first();
                     @endphp
+
+
+
                     @if($menu !=null)
                     @foreach($menu->links as $link)
                     <div class="col-auto  d-none d-lg-flex align-items-center p-0 mx-1 " >
@@ -73,7 +76,7 @@
                     </div>
                     <div class="col-12 px-0 d-flex justify-content-center align-items-center  dropdown"  style="width: 55px;height: 55px;" >
                         <div style="width: 55px;height: 55px;cursor: pointer;" data-bs-toggle="dropdown" aria-expanded="false" class="d-flex justify-content-center align-items-center cursor-pointer">
-                            <img src="{{auth()->user()->getUserAvatar()}}" style="padding: 10px;border-radius: 50%;width: 55px;height: 55px;" alt="{{auth()->user()->name}}">
+                            <img src="{{url('uploads/image/'.auth()->user()->image)}}" style="padding: 10px;border-radius: 50%;width: 55px;height: 55px;" alt="{{auth()->user()->name}}">
                         </div>
                         <ul class="dropdown-menu dropdown-menu-end shadow border-0 py-2" aria-labelledby="dropdownMenuButton1" style="top: -3px;">
                                 <li><a class="dropdown-item font-1" href="{{route('user.dashboard')}}" ><span class="fal fa-sliders-h font-1" style="width: 20px;"></span> لوحة التحكم</a></li>

@@ -28,6 +28,10 @@ use App\Http\Controllers\Backend\BackendUserRoleController;
 use App\Http\Controllers\Backend\BackendRoleController;
 use App\Http\Controllers\Backend\BackendTagController;
 use App\Http\Controllers\Backend\BackendPluginController;
+use App\Http\Controllers\LeaveController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\PermissionsController;
+use Illuminate\Support\Facades\DB;
 
 
 # Frontend Controllers
@@ -42,10 +46,18 @@ Auth::routes();
 
 Route::get('/', [FrontController::class,'index'])->name('home');
 Route::get('/index2', function(){return view('front.index2');})->name('index2');
+Route::post('/register', [RegisterController::class,'create'])->name('register');
+Route::get('/register', function () {
+    $permissions = DB::table('user_permissions')->get();
+    return view('auth.register', compact('permissions'));
+});
+
+Route::post('/create-leave', [LeaveController::class,'create']);
 
 
+Route::get('manifest.json',[BackendHelperController::class,'manifest'])->name('manifest');
 
-Route::prefix('dashboard')->middleware(['auth','ActiveAccount','verified'])->name('user.')->group(function () {
+Route::prefix('dashboard')->middleware('IsActive')->name('user.')->group(function () {
     Route::get('/', [FrontendProfileController::class,'dashboard'])->name('dashboard');
     Route::get('/support', [FrontendProfileController::class,'support'])->name('support');
     Route::get('/support/create-ticket', [FrontendProfileController::class,'create_ticket'])->name('create-ticket');
@@ -59,16 +71,47 @@ Route::prefix('dashboard')->middleware(['auth','ActiveAccount','verified'])->nam
         Route::put('/update-password',[FrontendProfileController::class,'profile_update_password'])->name('update-password');
         Route::put('/update-email',[FrontendProfileController::class,'profile_update_email'])->name('update-email');
     });
+
+
+    Route::get('blocked',[BackendHelperController::class,'blocked_user'])->name('blocked');
+Route::get('robots.txt',[BackendHelperController::class,'robots']);
+Route::get('sitemap.xml',[BackendSiteMapController::class,'sitemap']);
+Route::get('sitemaps/links',[BackendSiteMapController::class,'custom_links']);
+Route::get('sitemaps/{name}/{page}/sitemap.xml',[BackendSiteMapController::class,'viewer']);
+
+
+Route::view('contact','front.pages.contact')->name('contact');
+Route::get('page/{page}',[FrontController::class,'page'])->name('page.show');
+Route::get('tag/{tag}',[FrontController::class,'tag'])->name('tag.show');
+Route::get('category/{category}',[FrontController::class,'category'])->name('category.show');
+Route::get('article/{article}',[FrontController::class,'article'])->name('article.show');
+Route::get('blog',[FrontController::class,'blog'])->name('blog');
+Route::post('contact',[FrontController::class,'contact_post'])->name('contact-post');
+Route::post('comment',[FrontController::class,'comment_post'])->name('comment-post');
+
+
 });
 
 
 
 #Route::get('/test',[BackendTestController::class,'test']);
 
-Route::prefix('admin')->middleware(['auth','ActiveAccount'])->name('admin.')->group(function () {
 
-    Route::get('/',[BackendAdminController::class,'index'])->name('index');
+Route::prefix('admin')->middleware('IsAdmin')->name('admin.')->group(function () {
+   
+    Route::get('permissions',[PermissionsController::class,'index']);
+    Route::post('insert-permission',[PermissionsController::class,'create']);
+    Route::get('delete-permission/{id}',[PermissionsController::class,'remove']);
+
+    Route::get('leave',[LeaveController::class,'index'])->name('leave.index');
+    Route::get('edit-status/{id}',[LeaveController::class,'edit']);
+    Route::put('update-status/{id}',[LeaveController::class,'update']);
+    Route::get('auth-user/{id}',[BackendUserController::class,'authUser']);
+    Route::put('create-auth/{id}',[BackendUserController::class,'createAuth']);
+    Route::get('/',[BackendAdminController::class,'index'])->name('admin.index');
     Route::middleware('auth')->group(function () {
+
+
         Route::resource('announcements',BackendAnnouncementController::class);
         Route::resource('files',BackendFileController::class);
         Route::post('contacts/resolve',[BackendContactController::class,'resolve'])->name('contacts.resolve');
@@ -142,19 +185,4 @@ Route::get('/login/facebook/redirect', [LoginController::class,'redirect_faceboo
 Route::get('/login/facebook/callback', [LoginController::class,'callback_facebook']);
 
 
-Route::get('blocked',[BackendHelperController::class,'blocked_user'])->name('blocked');
-Route::get('robots.txt',[BackendHelperController::class,'robots']);
-Route::get('manifest.json',[BackendHelperController::class,'manifest'])->name('manifest');
-Route::get('sitemap.xml',[BackendSiteMapController::class,'sitemap']);
-Route::get('sitemaps/links',[BackendSiteMapController::class,'custom_links']);
-Route::get('sitemaps/{name}/{page}/sitemap.xml',[BackendSiteMapController::class,'viewer']);
 
-
-Route::view('contact','front.pages.contact')->name('contact');
-Route::get('page/{page}',[FrontController::class,'page'])->name('page.show');
-Route::get('tag/{tag}',[FrontController::class,'tag'])->name('tag.show');
-Route::get('category/{category}',[FrontController::class,'category'])->name('category.show');
-Route::get('article/{article}',[FrontController::class,'article'])->name('article.show');
-Route::get('blog',[FrontController::class,'blog'])->name('blog');
-Route::post('contact',[FrontController::class,'contact_post'])->name('contact-post');
-Route::post('comment',[FrontController::class,'comment_post'])->name('comment-post');
